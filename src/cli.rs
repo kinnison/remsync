@@ -1,5 +1,6 @@
 //! CLI definitions for remsync
 
+use std::path::PathBuf;
 use structopt::StructOpt;
 
 #[derive(Debug, StructOpt)]
@@ -60,4 +61,12 @@ pub enum Command {
     #[structopt(name = "ls")]
     /// List the contents of the server
     ListServer,
+    #[structopt(name = "fetch-blob")]
+    /// Fetch a blob
+    FetchBlob {
+        /// The ID of the blob to fetch
+        id: String,
+        /// Output location for the blob
+        out: PathBuf,
+    },
 }

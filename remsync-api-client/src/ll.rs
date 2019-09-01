@@ -115,3 +115,60 @@ where
     let ret = hoover_body_to_vec(response.into_body()).await?;
     Ok(serde_json::from_slice(&ret)?)
 }
+
+pub async fn storage_fetch_blob<C>(
+    client: &Client<C, Body>,
+    base: &Uri,
+    user_token: &str,
+    id: &str,
+    output: &mut dyn std::io::Write,
+) -> GenericResult<usize>
+where
+    C: Connect + Sync + 'static,
+{
+    let doc = percent_encoding::utf8_percent_encode(id, &percent_encoding::NON_ALPHANUMERIC);
+    let request = Request::builder()
+        .header("Authorization", format!("Bearer {}", user_token))
+        .method("GET")
+        .uri(catenate_url_path(
+            base,
+            &format!("/document-storage/json/2/docs?withBlob=1&doc={}", doc),
+        )?)
+        .body(Body::empty())?;
+    let response = client.request(request).await?;
+
+    if !response.status().is_success() {
+        return Err(format!("API:GetDocsList:{:?}", response).into());
+    }
+
+    // The body is a JSON list of document nodes
+    let docs = hoover_body_to_vec(response.into_body()).await?;
+    let docs: Vec<DocsResponse> = serde_json::from_slice(&docs)?;
+    if docs.len() != 1 {
+        return Err(format!("API:GetDocsList: Expected 1, got {} documents", docs.len()).into());
+    }
+
+    if docs[0].blob_url_get().is_empty() {
+        return Err(format!("API:GetDocsList: Blob URL missing: {:?}", docs[0]).into());
+    }
+
+    let request = Request::builder()
+        .method("GET")
+        .uri(docs[0].blob_url_get())
+        .body(Body::empty())?;
+    let response = client.request(request).await?;
+
+    if !response.status().is_success() {
+        return Err(format!("API:GetBlob:{:?}", response).into());
+    }
+
+    let mut body = response.into_body();
+    let mut written = 0;
+    while let Some(next) = body.next().await {
+        let chunk = next?;
+        output.write_all(&chunk)?;
+        written += chunk.len();
+    }
+
+    Ok(written)
+}

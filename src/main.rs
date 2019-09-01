@@ -97,6 +97,24 @@ async fn show_tokens(opt: &Options) -> Result<()> {
     Ok(())
 }
 
+async fn fetch_blob(opt: &Options) -> Result<()> {
+    let user_token = acquire_user_token(opt).await?;
+    let storage_base_uri = discover_storage_base(opt, &user_token).await?;
+    let client = https_capable_client();
+    let (id, out) = match &opt.cmd {
+        Command::FetchBlob { id, out } => (id, out),
+        _ => unreachable!(),
+    };
+    use std::fs::File;
+    use std::io::BufWriter;
+    let mut outbuf = BufWriter::new(File::create(out)?);
+    println!(
+        "Written {} bytes",
+        llapi::storage_fetch_blob(&client, &storage_base_uri, &user_token, id, &mut outbuf).await?
+    );
+    Ok(())
+}
+
 #[tokio::main]
 async fn main() -> Result<()> {
     let opt = Options::get();
@@ -104,5 +122,6 @@ async fn main() -> Result<()> {
         Command::Register { .. } => register_device(&opt).await,
         Command::ListServer => list_server(&opt).await,
         Command::ShowTokens => show_tokens(&opt).await,
+        Command::FetchBlob { .. } => fetch_blob(&opt).await,
     }
 }
