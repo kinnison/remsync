@@ -1,23 +1,23 @@
-//! Types for the websockets
+//! Types for the Notifications
 
 use crate::NodeType;
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
-/// The type of a web socket event
+/// The type of a notification event
 #[derive(Debug, Serialize, Deserialize, Copy, Clone, PartialEq, Eq)]
-pub enum WebSocketEventType {
+pub enum NotificationEventType {
     /// A document/collection was added/modified
     DocAdded,
     /// A document/collection was removed
     DocDeleted,
 }
 
-/// Attributes for a web socket message.
+/// Attributes for a notification message.
 ///
-/// The attributes actually carry all the useful data about a web socket event.
+/// The attributes actually carry all the useful data about a notification event.
 /// For example, the device which made the change, and which node it happened to.
 #[derive(Debug, Serialize, Deserialize, Clone)]
-pub struct WebSocketMessageAttributes {
+pub struct NotificationMessageAttributes {
     #[serde(rename = "auth0UserID")]
     /// The User ID of the actor which made the change
     auth0_user_id: String,
@@ -28,7 +28,7 @@ pub struct WebSocketMessageAttributes {
     )]
     bookmarked: bool,
     /// The event kind
-    event: WebSocketEventType,
+    event: NotificationEventType,
     /// The ID of the node the event is about
     id: String,
     /// The parent of the node the event is about
@@ -53,15 +53,15 @@ pub struct WebSocketMessageAttributes {
     name: String,
 }
 
-impl WebSocketMessageAttributes {
-    /// Create a new web socket message attributes object.
+impl NotificationMessageAttributes {
+    /// Create a new notification message attributes object.
     ///
     /// The attributes of the mesage tell us what happened, to what node.
     ///
     /// ```
-    /// # use remsync_api_types::{NodeType, WebSocketEventType, WebSocketMessageAttributes};
-    /// let attrs = WebSocketMessageAttributes::new(
-    ///     "some-user-id", false, WebSocketEventType::DocAdded, "some-id",
+    /// # use remsync_api_types::{NodeType, NotificationEventType, NotificationMessageAttributes};
+    /// let attrs = NotificationMessageAttributes::new(
+    ///     "some-user-id", false, NotificationEventType::DocAdded, "some-id",
     ///     "some-parent-id", "some-device-desc", "some-device-id",
     ///     NodeType::CollectionType, 7, "My Shiny Node"
     /// );
@@ -69,7 +69,7 @@ impl WebSocketMessageAttributes {
     pub fn new(
         auth0_user_id: &str,
         bookmarked: bool,
-        event: WebSocketEventType,
+        event: NotificationEventType,
         id: &str,
         parent: &str,
         source_device_desc: &str,
@@ -95,9 +95,9 @@ impl WebSocketMessageAttributes {
     /// Retrieve the auth0 userid from an attributes object.
     ///
     /// ```
-    /// # use remsync_api_types::{NodeType, WebSocketEventType, WebSocketMessageAttributes};
-    /// # let attrs = WebSocketMessageAttributes::new(
-    /// #     "some-user-id", false, WebSocketEventType::DocAdded, "some-id",
+    /// # use remsync_api_types::{NodeType, NotificationEventType, NotificationMessageAttributes};
+    /// # let attrs = NotificationMessageAttributes::new(
+    /// #     "some-user-id", false, NotificationEventType::DocAdded, "some-id",
     /// #     "some-parent-id", "some-device-desc", "some-device-id",
     /// #     NodeType::CollectionType, 7, "My Shiny Node"
     /// # );
@@ -110,9 +110,9 @@ impl WebSocketMessageAttributes {
     /// Retrieve the bookmarked status from an attributes object.
     ///
     /// ```
-    /// # use remsync_api_types::{NodeType, WebSocketEventType, WebSocketMessageAttributes};
-    /// # let attrs = WebSocketMessageAttributes::new(
-    /// #     "some-user-id", false, WebSocketEventType::DocAdded, "some-id",
+    /// # use remsync_api_types::{NodeType, NotificationEventType, NotificationMessageAttributes};
+    /// # let attrs = NotificationMessageAttributes::new(
+    /// #     "some-user-id", false, NotificationEventType::DocAdded, "some-id",
     /// #     "some-parent-id", "some-device-desc", "some-device-id",
     /// #     NodeType::CollectionType, 7, "My Shiny Node"
     /// # );
@@ -125,24 +125,24 @@ impl WebSocketMessageAttributes {
     /// Retrieve the event type from an attributes object.
     ///
     /// ```
-    /// # use remsync_api_types::{NodeType, WebSocketEventType, WebSocketMessageAttributes};
-    /// # let attrs = WebSocketMessageAttributes::new(
-    /// #     "some-user-id", false, WebSocketEventType::DocAdded, "some-id",
+    /// # use remsync_api_types::{NodeType, NotificationEventType, NotificationMessageAttributes};
+    /// # let attrs = NotificationMessageAttributes::new(
+    /// #     "some-user-id", false, NotificationEventType::DocAdded, "some-id",
     /// #     "some-parent-id", "some-device-desc", "some-device-id",
     /// #     NodeType::CollectionType, 7, "My Shiny Node"
     /// # );
-    /// assert_eq!(attrs.event(), WebSocketEventType::DocAdded);
+    /// assert_eq!(attrs.event(), NotificationEventType::DocAdded);
     /// ```
-    pub fn event(&self) -> WebSocketEventType {
+    pub fn event(&self) -> NotificationEventType {
         self.event
     }
 
     /// Retrieve the node ID from an attributes object.
     ///
     /// ```
-    /// # use remsync_api_types::{NodeType, WebSocketEventType, WebSocketMessageAttributes};
-    /// # let attrs = WebSocketMessageAttributes::new(
-    /// #     "some-user-id", false, WebSocketEventType::DocAdded, "some-id",
+    /// # use remsync_api_types::{NodeType, NotificationEventType, NotificationMessageAttributes};
+    /// # let attrs = NotificationMessageAttributes::new(
+    /// #     "some-user-id", false, NotificationEventType::DocAdded, "some-id",
     /// #     "some-parent-id", "some-device-desc", "some-device-id",
     /// #     NodeType::CollectionType, 7, "My Shiny Node"
     /// # );
@@ -155,9 +155,9 @@ impl WebSocketMessageAttributes {
     /// Retrieve the node's parent ID from an attributes object.
     ///
     /// ```
-    /// # use remsync_api_types::{NodeType, WebSocketEventType, WebSocketMessageAttributes};
-    /// # let attrs = WebSocketMessageAttributes::new(
-    /// #     "some-user-id", false, WebSocketEventType::DocAdded, "some-id",
+    /// # use remsync_api_types::{NodeType, NotificationEventType, NotificationMessageAttributes};
+    /// # let attrs = NotificationMessageAttributes::new(
+    /// #     "some-user-id", false, NotificationEventType::DocAdded, "some-id",
     /// #     "some-parent-id", "some-device-desc", "some-device-id",
     /// #     NodeType::CollectionType, 7, "My Shiny Node"
     /// # );
@@ -170,9 +170,9 @@ impl WebSocketMessageAttributes {
     /// Retrieve the author device descriptor from an attributes object.
     ///
     /// ```
-    /// # use remsync_api_types::{NodeType, WebSocketEventType, WebSocketMessageAttributes};
-    /// # let attrs = WebSocketMessageAttributes::new(
-    /// #     "some-user-id", false, WebSocketEventType::DocAdded, "some-id",
+    /// # use remsync_api_types::{NodeType, NotificationEventType, NotificationMessageAttributes};
+    /// # let attrs = NotificationMessageAttributes::new(
+    /// #     "some-user-id", false, NotificationEventType::DocAdded, "some-id",
     /// #     "some-parent-id", "some-device-desc", "some-device-id",
     /// #     NodeType::CollectionType, 7, "My Shiny Node"
     /// # );
@@ -185,9 +185,9 @@ impl WebSocketMessageAttributes {
     /// Retrieve the author device ID from an attributes object.
     ///
     /// ```
-    /// # use remsync_api_types::{NodeType, WebSocketEventType, WebSocketMessageAttributes};
-    /// # let attrs = WebSocketMessageAttributes::new(
-    /// #     "some-user-id", false, WebSocketEventType::DocAdded, "some-id",
+    /// # use remsync_api_types::{NodeType, NotificationEventType, NotificationMessageAttributes};
+    /// # let attrs = NotificationMessageAttributes::new(
+    /// #     "some-user-id", false, NotificationEventType::DocAdded, "some-id",
     /// #     "some-parent-id", "some-device-desc", "some-device-id",
     /// #     NodeType::CollectionType, 7, "My Shiny Node"
     /// # );
@@ -200,9 +200,9 @@ impl WebSocketMessageAttributes {
     /// Retrieve the node type from an attributes object.
     ///
     /// ```
-    /// # use remsync_api_types::{NodeType, WebSocketEventType, WebSocketMessageAttributes};
-    /// # let attrs = WebSocketMessageAttributes::new(
-    /// #     "some-user-id", false, WebSocketEventType::DocAdded, "some-id",
+    /// # use remsync_api_types::{NodeType, NotificationEventType, NotificationMessageAttributes};
+    /// # let attrs = NotificationMessageAttributes::new(
+    /// #     "some-user-id", false, NotificationEventType::DocAdded, "some-id",
     /// #     "some-parent-id", "some-device-desc", "some-device-id",
     /// #     NodeType::CollectionType, 7, "My Shiny Node"
     /// # );
@@ -215,9 +215,9 @@ impl WebSocketMessageAttributes {
     /// Retrieve the node version from an attributes object.
     ///
     /// ```
-    /// # use remsync_api_types::{NodeType, WebSocketEventType, WebSocketMessageAttributes};
-    /// # let attrs = WebSocketMessageAttributes::new(
-    /// #     "some-user-id", false, WebSocketEventType::DocAdded, "some-id",
+    /// # use remsync_api_types::{NodeType, NotificationEventType, NotificationMessageAttributes};
+    /// # let attrs = NotificationMessageAttributes::new(
+    /// #     "some-user-id", false, NotificationEventType::DocAdded, "some-id",
     /// #     "some-parent-id", "some-device-desc", "some-device-id",
     /// #     NodeType::CollectionType, 7, "My Shiny Node"
     /// # );
@@ -230,9 +230,9 @@ impl WebSocketMessageAttributes {
     /// Retrieve the name of the node from an attributes object.
     ///
     /// ```
-    /// # use remsync_api_types::{NodeType, WebSocketEventType, WebSocketMessageAttributes};
-    /// # let attrs = WebSocketMessageAttributes::new(
-    /// #     "some-user-id", false, WebSocketEventType::DocAdded, "some-id",
+    /// # use remsync_api_types::{NodeType, NotificationEventType, NotificationMessageAttributes};
+    /// # let attrs = NotificationMessageAttributes::new(
+    /// #     "some-user-id", false, NotificationEventType::DocAdded, "some-id",
     /// #     "some-parent-id", "some-device-desc", "some-device-id",
     /// #     NodeType::CollectionType, 7, "My Shiny Node"
     /// # );
@@ -243,14 +243,14 @@ impl WebSocketMessageAttributes {
     }
 }
 
-/// A WebSocket message
+/// A Notification message
 ///
 /// This structure encapsulates the message attributes along with a message ID
 /// and a publication time.  The same message might be sent to many endpoints
 #[derive(Debug, Serialize, Deserialize, Clone)]
-pub struct WebSocketMessage {
+pub struct NotificationMessage {
     /// The attributes of this event message
-    attributes: WebSocketMessageAttributes,
+    attributes: NotificationMessageAttributes,
     #[serde(rename = "messageId")]
     /// The ID of the message
     message_id_: String,
@@ -263,21 +263,22 @@ pub struct WebSocketMessage {
     publish_time: String,
 }
 
-impl WebSocketMessage {
-    /// Create a new web socket message.
+impl NotificationMessage {
+    /// Create a new notification message.
     ///
-    /// Web socket messages consist of an ID, a time, and a set of attributes.
+    /// Notification messages consist of an ID, a time, and a set of attributes.
+    ///
     /// ```
     /// # use remsync_api_types::*;
-    /// # let attrs = WebSocketMessageAttributes::new(
-    /// #     "some-user-id", false, WebSocketEventType::DocAdded, "some-id",
+    /// # let attrs = NotificationMessageAttributes::new(
+    /// #     "some-user-id", false, NotificationEventType::DocAdded, "some-id",
     /// #     "some-parent-id", "some-device-desc", "some-device-id",
     /// #     NodeType::CollectionType, 7, "My Shiny Node"
     /// # );
-    /// let msg = WebSocketMessage::new(attrs, "some-message-id", "some-publish-time");
+    /// let msg = NotificationMessage::new(attrs, "some-message-id", "some-publish-time");
     /// ```
     pub fn new(
-        attributes: WebSocketMessageAttributes,
+        attributes: NotificationMessageAttributes,
         message_id: &str,
         publish_time: &str,
     ) -> Self {
@@ -290,50 +291,50 @@ impl WebSocketMessage {
         }
     }
 
-    /// Retrieve the message attributes from a web socket message.
+    /// Retrieve the message attributes from a notification message.
     ///
     /// Note, this is only a borrow of the data
     ///
     /// ```
     /// # use remsync_api_types::*;
-    /// # let attrs = WebSocketMessageAttributes::new(
-    /// #     "some-user-id", false, WebSocketEventType::DocAdded, "some-id",
+    /// # let attrs = NotificationMessageAttributes::new(
+    /// #     "some-user-id", false, NotificationEventType::DocAdded, "some-id",
     /// #     "some-parent-id", "some-device-desc", "some-device-id",
     /// #     NodeType::CollectionType, 7, "My Shiny Node"
     /// # );
-    /// # let msg = WebSocketMessage::new(attrs, "some-message-id", "some-publish-time");
+    /// # let msg = NotificationMessage::new(attrs, "some-message-id", "some-publish-time");
     /// assert_eq!(msg.attributes().id(), "some-id");
     /// ```
-    pub fn attributes(&self) -> &WebSocketMessageAttributes {
+    pub fn attributes(&self) -> &NotificationMessageAttributes {
         &self.attributes
     }
 
-    /// Retrieve the message ID from a web socket message.
+    /// Retrieve the message ID from a notification message.
     ///
     /// ```
     /// # use remsync_api_types::*;
-    /// # let attrs = WebSocketMessageAttributes::new(
-    /// #     "some-user-id", false, WebSocketEventType::DocAdded, "some-id",
+    /// # let attrs = NotificationMessageAttributes::new(
+    /// #     "some-user-id", false, NotificationEventType::DocAdded, "some-id",
     /// #     "some-parent-id", "some-device-desc", "some-device-id",
     /// #     NodeType::CollectionType, 7, "My Shiny Node"
     /// # );
-    /// # let msg = WebSocketMessage::new(attrs, "some-message-id", "some-publish-time");
+    /// # let msg = NotificationMessage::new(attrs, "some-message-id", "some-publish-time");
     /// assert_eq!(msg.message_id(), "some-message-id");
     /// ```
     pub fn message_id(&self) -> &str {
         &self.message_id
     }
 
-    /// Retrieve the publication time from a web socket message.
+    /// Retrieve the publication time from a notification message.
     ///
     /// ```
     /// # use remsync_api_types::*;
-    /// # let attrs = WebSocketMessageAttributes::new(
-    /// #     "some-user-id", false, WebSocketEventType::DocAdded, "some-id",
+    /// # let attrs = NotificationMessageAttributes::new(
+    /// #     "some-user-id", false, NotificationEventType::DocAdded, "some-id",
     /// #     "some-parent-id", "some-device-desc", "some-device-id",
     /// #     NodeType::CollectionType, 7, "My Shiny Node"
     /// # );
-    /// # let msg = WebSocketMessage::new(attrs, "some-message-id", "some-publish-time");
+    /// # let msg = NotificationMessage::new(attrs, "some-message-id", "some-publish-time");
     /// assert_eq!(msg.publish_time(), "some-publish-time");
     /// ```
     pub fn publish_time(&self) -> &str {
@@ -341,69 +342,69 @@ impl WebSocketMessage {
     }
 }
 
-/// An actual web socket event
+/// An actual notification event
 ///
 /// The event consists of a message (potentially sent to several endpoints)
 /// and a subscription channel name which is likely unique to this endpoint.
 #[derive(Debug, Serialize, Deserialize)]
-pub struct WebSocketEvent {
+pub struct NotificationEvent {
     /// The message in the event
-    message: WebSocketMessage,
+    message: NotificationMessage,
     /// The string name of the subscription channel
     subscription: String,
 }
 
-impl WebSocketEvent {
-    /// Create a new web socket event.
+impl NotificationEvent {
+    /// Create a new notification event.
     ///
-    /// Web socket events consist of a subscription name and a message.
+    /// Notification events consist of a subscription name and a message.
     /// ```
     /// # use remsync_api_types::*;
-    /// # let attrs = WebSocketMessageAttributes::new(
-    /// #     "some-user-id", false, WebSocketEventType::DocAdded, "some-id",
+    /// # let attrs = NotificationMessageAttributes::new(
+    /// #     "some-user-id", false, NotificationEventType::DocAdded, "some-id",
     /// #     "some-parent-id", "some-device-desc", "some-device-id",
     /// #     NodeType::CollectionType, 7, "My Shiny Node"
     /// # );
-    /// # let msg = WebSocketMessage::new(attrs, "some-message-id", "some-publish-time");
-    /// let evt = WebSocketEvent::new(msg, "some-subscription-name");
+    /// # let msg = NotificationMessage::new(attrs, "some-message-id", "some-publish-time");
+    /// let evt = NotificationEvent::new(msg, "some-subscription-name");
     /// ```
-    pub fn new(message: WebSocketMessage, subscription: &str) -> Self {
+    pub fn new(message: NotificationMessage, subscription: &str) -> Self {
         Self {
             message,
             subscription: subscription.to_owned(),
         }
     }
 
-    /// Access the message for this websocket event
+    /// Access the message for this Notification event
     ///
     /// Note, this is only a borrow of the data.
     ///
     /// ```
     /// # use remsync_api_types::*;
-    /// # let attrs = WebSocketMessageAttributes::new(
-    /// #     "some-user-id", false, WebSocketEventType::DocAdded, "some-id",
+    /// # let attrs = NotificationMessageAttributes::new(
+    /// #     "some-user-id", false, NotificationEventType::DocAdded, "some-id",
     /// #     "some-parent-id", "some-device-desc", "some-device-id",
     /// #     NodeType::CollectionType, 7, "My Shiny Node"
     /// # );
-    /// # let msg = WebSocketMessage::new(attrs, "some-message-id", "some-publish-time");
-    /// # let evt = WebSocketEvent::new(msg, "some-subscription-name");
+    /// # let msg = NotificationMessage::new(attrs, "some-message-id", "some-publish-time");
+    /// # let evt = NotificationEvent::new(msg, "some-subscription-name");
     /// assert_eq!(evt.message().message_id(), "some-message-id");
     /// ```
-    pub fn message(&self) -> &WebSocketMessage {
+    pub fn message(&self) -> &NotificationMessage {
         &self.message
     }
 
-    /// Access the subscription channel name for this websocket event
+    /// Access the subscription channel name for this Notification event
     ///
     /// ```
     /// # use remsync_api_types::*;
-    /// # let attrs = WebSocketMessageAttributes::new(
-    /// #     "some-user-id", false, WebSocketEventType::DocAdded, "some-id",
+    /// # let attrs = NotificationMessageAttributes::new(
+    /// #     "some-user-id", false, NotificationEventType::DocAdded, "some-id",
     /// #     "some-parent-id", "some-device-desc", "some-device-id",
     /// #     NodeType::CollectionType, 7, "My Shiny Node"
     /// # );
-    /// # let msg = WebSocketMessage::new(attrs, "some-message-id", "some-publish-time");
-    /// # let evt = WebSocketEvent::new(msg, "some-subscription-name");
+    /// # let msg = NotificationMessage::new(attrs, "some-message-id", "some-publish-time");
+    /// # let evt = NotificationEvent::new(msg, "some-subscription-name");
     /// assert_eq!(evt.subscription(), "some-subscription-name");
     /// ```
     pub fn subscription(&self) -> &str {
@@ -465,7 +466,7 @@ mod test {
 
     #[test]
     fn deleted() {
-        round_trip::<WebSocketEvent>(
+        round_trip::<NotificationEvent>(
             r#"
 {
   "message": {
@@ -494,7 +495,7 @@ mod test {
 
     #[test]
     fn added_or_changed() {
-        round_trip::<WebSocketEvent>(
+        round_trip::<NotificationEvent>(
             r#"
 {
   "message": {
