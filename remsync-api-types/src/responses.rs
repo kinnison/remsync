@@ -659,7 +659,6 @@ pub mod delete {
             self.version
         }
     }
-
 }
 
 #[cfg(test)]
