@@ -12,6 +12,15 @@ pub struct Options {
     )]
     /// Authentication server to use to acquire bearer tokens
     pub auth_server: String,
+
+    #[structopt(
+        long = "discovery-server",
+        name = "discovery server",
+        default_value = "https://service-manager-production-dot-remarkable-production.appspot.com/"
+    )]
+    /// Discovery server to use to find the various services
+    pub discovery_server: String,
+
     #[structopt(
         long = "device-token",
         name = "device token",
@@ -19,7 +28,9 @@ pub struct Options {
         hide_env_values = true
     )]
     pub device_token: String,
+
     #[structopt(subcommand)]
+    /// The command selected by the user
     pub cmd: Command,
 }
 
@@ -43,6 +54,9 @@ pub enum Command {
         #[structopt(long = "id", name = "device-id")]
         device_id: Option<String>,
     },
+    #[structopt(name = "show-tokens")]
+    /// Show the content of the device and user tokens
+    ShowTokens,
     #[structopt(name = "ls")]
     /// List the contents of the server
     ListServer,

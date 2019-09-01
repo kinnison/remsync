@@ -51,6 +51,17 @@ pub mod discovery {
         pub fn host(&self) -> &str {
             &self.host
         }
+
+        /// Pull the host out of this DiscoveryResponse
+        ///
+        /// ```
+        /// # use remsync_api_types::DiscoveryResponse;
+        /// # let discovery = DiscoveryResponse::new("OK", "foo.com");
+        /// assert_eq!(discovery.into_host(), "foo.com");
+        /// ```
+        pub fn into_host(self) -> String {
+            self.host
+        }
     }
 }
 

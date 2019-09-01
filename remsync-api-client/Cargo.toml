@@ -11,3 +11,5 @@ remsync-api-types = { path="../remsync-api-types" }
 hyper = { git = "https://github.com/hyperium/hyper" }
 http = "0.1"
 serde_json = "1.0"
+jsonwebtoken = "6"
+percent-encoding = "2.1"
