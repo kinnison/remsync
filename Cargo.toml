@@ -6,7 +6,15 @@ edition = "2018"
 
 [workspace]
 members = [
-    "remsync-api-types"
+    "remsync-api-types",
+    "remsync-api-client",
 ]
 
 [dependencies]
+remsync-api-types = { path = "remsync-api-types" }
+remsync-api-client = { path = "remsync-api-client" }
+structopt = "0.3"
+uuid = {version = "0.7", features=["v4"]}
+# The following will have to be kept in sync with hyper and friends
+tokio = { version = "=0.2.0-alpha.4", default-features = false, features = ["rt-full"] }
+hyper-tls = { git = "https://github.com/hyperium/hyper-tls" }

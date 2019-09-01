@@ -59,6 +59,10 @@ The payload of the response is the device JWT
 Interestingly `rmapi` passes `desktop-linux` as the `deviceDesc` where `splitbrains`
 chooses to continue to say `device-windows`.
 
+If the descriptor is `remarkable` then it registers as a tablet (necessary to unlock
+a new account) any `desktop-*` is a 'desktop' device. I do not yet know the
+prefix for a mobile device.
+
 ## Acquiring a user token
 
 User tokens are needed for all other non-blob operations. Both the splitbrains
@@ -66,6 +70,8 @@ and the rmapi codebases acquire a fresh user token on each run.
 
 We `POST` to <https://my.remarkable.com/token/json/2/user/new> with a bearer
 of the device token and an empty body.
+
+It's important to send a `Content-Length: 0` header otherwise things fail.
 
 The payload of the response is a user JWT which can be used for the foreseeable
 future, though parsing it and knowing the expiry could be useful. A token I
