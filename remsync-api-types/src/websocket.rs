@@ -3,6 +3,7 @@
 use crate::NodeType;
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
+/// The type of a web socket event
 #[derive(Debug, Serialize, Deserialize, Copy, Clone, PartialEq, Eq)]
 pub enum WebSocketEventType {
     /// A document/collection was added/modified
@@ -11,7 +12,11 @@ pub enum WebSocketEventType {
     DocDeleted,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+/// Attributes for a web socket message.
+///
+/// The attributes actually carry all the useful data about a web socket event.
+/// For example, the device which made the change, and which node it happened to.
+#[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct WebSocketMessageAttributes {
     #[serde(rename = "auth0UserID")]
     /// The User ID of the actor which made the change
@@ -238,7 +243,11 @@ impl WebSocketMessageAttributes {
     }
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+/// A WebSocket message
+///
+/// This structure encapsulates the message attributes along with a message ID
+/// and a publication time.  The same message might be sent to many endpoints
+#[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct WebSocketMessage {
     /// The attributes of this event message
     attributes: WebSocketMessageAttributes,
@@ -332,6 +341,10 @@ impl WebSocketMessage {
     }
 }
 
+/// An actual web socket event
+///
+/// The event consists of a message (potentially sent to several endpoints)
+/// and a subscription channel name which is likely unique to this endpoint.
 #[derive(Debug, Serialize, Deserialize)]
 pub struct WebSocketEvent {
     /// The message in the event
