@@ -20,7 +20,7 @@ pub mod discovery {
         /// Create a new DiscoveryResponse object
         ///
         /// ```
-        /// # use resync_api_types::DiscoveryResponse;
+        /// # use remsync_api_types::DiscoveryResponse;
         /// let discovery = DiscoveryResponse::new("OK", "foo.com");
         /// ```
         pub fn new(status: &str, host: &str) -> Self {
@@ -33,7 +33,7 @@ pub mod discovery {
         /// Look up the status of a DiscoveryResponse object
         ///
         /// ```
-        /// # use resync_api_types::DiscoveryResponse;
+        /// # use remsync_api_types::DiscoveryResponse;
         /// # let discovery = DiscoveryResponse::new("OK", "foo.com");
         /// assert_eq!(discovery.status(), "OK");
         /// ```
@@ -44,7 +44,7 @@ pub mod discovery {
         /// Look up the status of a DiscoveryResponse object
         ///
         /// ```
-        /// # use resync_api_types::DiscoveryResponse;
+        /// # use remsync_api_types::DiscoveryResponse;
         /// # let discovery = DiscoveryResponse::new("OK", "foo.com");
         /// assert_eq!(discovery.host(), "foo.com");
         /// ```
@@ -113,7 +113,7 @@ pub mod docs {
         /// valid for documents.  It's zero for collection nodes.
         ///
         /// ```
-        /// # use resync_api_types::{NodeType, DocsResponse};
+        /// # use remsync_api_types::{NodeType, DocsResponse};
         /// let doc = DocsResponse::new(
         ///     true, "", "some-id", 4, "some-url", "some-expiry",
         ///     "some-modified", NodeType::DocumentType, "some-name",
@@ -153,7 +153,7 @@ pub mod docs {
         /// Retrieve the success of a DocsResponse object
         ///
         /// ```
-        /// # use resync_api_types::{NodeType, DocsResponse};
+        /// # use remsync_api_types::{NodeType, DocsResponse};
         /// # let doc = DocsResponse::new(
         /// #     true, "", "some-id", 4, "some-url", "some-expiry",
         /// #     "some-modified", NodeType::DocumentType, "some-name",
@@ -168,7 +168,7 @@ pub mod docs {
         /// Retrieve the message of a DocsResponse object
         ///
         /// ```
-        /// # use resync_api_types::{NodeType, DocsResponse};
+        /// # use remsync_api_types::{NodeType, DocsResponse};
         /// # let doc = DocsResponse::new(
         /// #     true, "", "some-id", 4, "some-url", "some-expiry",
         /// #     "some-modified", NodeType::DocumentType, "some-name",
@@ -183,7 +183,7 @@ pub mod docs {
         /// Retrieve the ID of a DocsResponse object
         ///
         /// ```
-        /// # use resync_api_types::{NodeType, DocsResponse};
+        /// # use remsync_api_types::{NodeType, DocsResponse};
         /// # let doc = DocsResponse::new(
         /// #     true, "", "some-id", 4, "some-url", "some-expiry",
         /// #     "some-modified", NodeType::DocumentType, "some-name",
@@ -198,7 +198,7 @@ pub mod docs {
         /// Retrieve the version of a DocsResponse object
         ///
         /// ```
-        /// # use resync_api_types::{NodeType, DocsResponse};
+        /// # use remsync_api_types::{NodeType, DocsResponse};
         /// # let doc = DocsResponse::new(
         /// #     true, "", "some-id", 4, "some-url", "some-expiry",
         /// #     "some-modified", NodeType::DocumentType, "some-name",
@@ -213,7 +213,7 @@ pub mod docs {
         /// Retrieve the BlobURLGet of a DocsResponse object
         ///
         /// ```
-        /// # use resync_api_types::{NodeType, DocsResponse};
+        /// # use remsync_api_types::{NodeType, DocsResponse};
         /// # let doc = DocsResponse::new(
         /// #     true, "", "some-id", 4, "some-url", "some-expiry",
         /// #     "some-modified", NodeType::DocumentType, "some-name",
@@ -228,7 +228,7 @@ pub mod docs {
         /// Retrieve the BlobURLGetExpires of a DocsResponse object
         ///
         /// ```
-        /// # use resync_api_types::{NodeType, DocsResponse};
+        /// # use remsync_api_types::{NodeType, DocsResponse};
         /// # let doc = DocsResponse::new(
         /// #     true, "", "some-id", 4, "some-url", "some-expiry",
         /// #     "some-modified", NodeType::DocumentType, "some-name",
@@ -243,7 +243,7 @@ pub mod docs {
         /// Retrieve the client modification time of a DocsResponse object
         ///
         /// ```
-        /// # use resync_api_types::{NodeType, DocsResponse};
+        /// # use remsync_api_types::{NodeType, DocsResponse};
         /// # let doc = DocsResponse::new(
         /// #     true, "", "some-id", 4, "some-url", "some-expiry",
         /// #     "some-modified", NodeType::DocumentType, "some-name",
@@ -258,7 +258,7 @@ pub mod docs {
         /// Retrieve the node type of a DocsResponse object
         ///
         /// ```
-        /// # use resync_api_types::{NodeType, DocsResponse};
+        /// # use remsync_api_types::{NodeType, DocsResponse};
         /// # let doc = DocsResponse::new(
         /// #     true, "", "some-id", 4, "some-url", "some-expiry",
         /// #     "some-modified", NodeType::DocumentType, "some-name",
@@ -273,7 +273,7 @@ pub mod docs {
         /// Retrieve the name of a DocsResponse object
         ///
         /// ```
-        /// # use resync_api_types::{NodeType, DocsResponse};
+        /// # use remsync_api_types::{NodeType, DocsResponse};
         /// # let doc = DocsResponse::new(
         /// #     true, "", "some-id", 4, "some-url", "some-expiry",
         /// #     "some-modified", NodeType::DocumentType, "some-name",
@@ -288,7 +288,7 @@ pub mod docs {
         /// Retrieve the current page of a DocsResponse object
         ///
         /// ```
-        /// # use resync_api_types::{NodeType, DocsResponse};
+        /// # use remsync_api_types::{NodeType, DocsResponse};
         /// # let doc = DocsResponse::new(
         /// #     true, "", "some-id", 4, "some-url", "some-expiry",
         /// #     "some-modified", NodeType::DocumentType, "some-name",
@@ -303,7 +303,7 @@ pub mod docs {
         /// Retrieve the bookmarked status of a DocsResponse object
         ///
         /// ```
-        /// # use resync_api_types::{NodeType, DocsResponse};
+        /// # use remsync_api_types::{NodeType, DocsResponse};
         /// # let doc = DocsResponse::new(
         /// #     true, "", "some-id", 4, "some-url", "some-expiry",
         /// #     "some-modified", NodeType::DocumentType, "some-name",
@@ -318,7 +318,7 @@ pub mod docs {
         /// Retrieve the parent ID of a DocsResponse object
         ///
         /// ```
-        /// # use resync_api_types::{NodeType, DocsResponse};
+        /// # use remsync_api_types::{NodeType, DocsResponse};
         /// # let doc = DocsResponse::new(
         /// #     true, "", "some-id", 4, "some-url", "some-expiry",
         /// #     "some-modified", NodeType::DocumentType, "some-name",
@@ -368,7 +368,7 @@ pub mod upload {
         /// These are returned in lists from upload requests.
         ///
         /// ```
-        /// # use resync_api_types::{NodeType, UploadRequestResponse};
+        /// # use remsync_api_types::{NodeType, UploadRequestResponse};
         /// let upload = UploadRequestResponse::new(
         ///     true, "", "some-id", 4, "some-url", "some-expiry",
         /// );
@@ -394,7 +394,7 @@ pub mod upload {
         /// Retrieve the success of an UploadRequestResponse object
         ///
         /// ```
-        /// # use resync_api_types::{NodeType, UploadRequestResponse};
+        /// # use remsync_api_types::{NodeType, UploadRequestResponse};
         /// # let upload = UploadRequestResponse::new(
         /// #     true, "", "some-id", 4, "some-url", "some-expiry",
         /// # );
@@ -407,7 +407,7 @@ pub mod upload {
         /// Retrieve the success of an UploadRequestResponse object
         ///
         /// ```
-        /// # use resync_api_types::{NodeType, UploadRequestResponse};
+        /// # use remsync_api_types::{NodeType, UploadRequestResponse};
         /// # let upload = UploadRequestResponse::new(
         /// #     true, "", "some-id", 4, "some-url", "some-expiry",
         /// # );
@@ -420,7 +420,7 @@ pub mod upload {
         /// Retrieve the ID of an UploadRequestResponse object
         ///
         /// ```
-        /// # use resync_api_types::{NodeType, UploadRequestResponse};
+        /// # use remsync_api_types::{NodeType, UploadRequestResponse};
         /// # let upload = UploadRequestResponse::new(
         /// #     true, "", "some-id", 4, "some-url", "some-expiry",
         /// # );
@@ -433,7 +433,7 @@ pub mod upload {
         /// Retrieve the version of an UploadRequestResponse object
         ///
         /// ```
-        /// # use resync_api_types::{NodeType, UploadRequestResponse};
+        /// # use remsync_api_types::{NodeType, UploadRequestResponse};
         /// # let upload = UploadRequestResponse::new(
         /// #     true, "", "some-id", 4, "some-url", "some-expiry",
         /// # );
@@ -446,7 +446,7 @@ pub mod upload {
         /// Retrieve the PUT url of an UploadRequestResponse object
         ///
         /// ```
-        /// # use resync_api_types::{NodeType, UploadRequestResponse};
+        /// # use remsync_api_types::{NodeType, UploadRequestResponse};
         /// # let upload = UploadRequestResponse::new(
         /// #     true, "", "some-id", 4, "some-url", "some-expiry",
         /// # );
@@ -459,7 +459,7 @@ pub mod upload {
         /// Retrieve the expiry time of the PUT url of an UploadRequestResponse object
         ///
         /// ```
-        /// # use resync_api_types::{NodeType, UploadRequestResponse};
+        /// # use remsync_api_types::{NodeType, UploadRequestResponse};
         /// # let upload = UploadRequestResponse::new(
         /// #     true, "", "some-id", 4, "some-url", "some-expiry",
         /// # );
@@ -496,7 +496,7 @@ pub mod upload {
         /// These are returned in lists from upload requests.
         ///
         /// ```
-        /// # use resync_api_types::{NodeType, UpdateStatusResponse};
+        /// # use remsync_api_types::{NodeType, UpdateStatusResponse};
         /// let update = UpdateStatusResponse::new(
         ///     true, "", "some-id", 4,
         /// );
@@ -513,7 +513,7 @@ pub mod upload {
         /// Retrieve the success of an UpdateStatusResponse object
         ///
         /// ```
-        /// # use resync_api_types::{NodeType, UpdateStatusResponse};
+        /// # use remsync_api_types::{NodeType, UpdateStatusResponse};
         /// # let update = UpdateStatusResponse::new(
         /// #     true, "", "some-id", 4,
         /// # );
@@ -526,7 +526,7 @@ pub mod upload {
         /// Retrieve the success of an UpdateStatusResponse object
         ///
         /// ```
-        /// # use resync_api_types::{NodeType, UpdateStatusResponse};
+        /// # use remsync_api_types::{NodeType, UpdateStatusResponse};
         /// # let update = UpdateStatusResponse::new(
         /// #     true, "", "some-id", 4,
         /// # );
@@ -539,7 +539,7 @@ pub mod upload {
         /// Retrieve the ID of an UpdateStatusResponse object
         ///
         /// ```
-        /// # use resync_api_types::{NodeType, UpdateStatusResponse};
+        /// # use remsync_api_types::{NodeType, UpdateStatusResponse};
         /// # let update = UpdateStatusResponse::new(
         /// #     true, "", "some-id", 4,
         /// # );
@@ -552,7 +552,7 @@ pub mod upload {
         /// Retrieve the version of an UpdateStatusResponse object
         ///
         /// ```
-        /// # use resync_api_types::{NodeType, UpdateStatusResponse};
+        /// # use remsync_api_types::{NodeType, UpdateStatusResponse};
         /// # let update = UpdateStatusResponse::new(
         /// #     true, "", "some-id", 4,
         /// # );
@@ -593,7 +593,7 @@ pub mod delete {
         /// These are returned in lists from upload requests.
         ///
         /// ```
-        /// # use resync_api_types::{NodeType, DeleteResponse};
+        /// # use remsync_api_types::{NodeType, DeleteResponse};
         /// let delete = DeleteResponse::new(
         ///     true, "", "some-id", 4,
         /// );
@@ -610,7 +610,7 @@ pub mod delete {
         /// Retrieve the success of an DeleteResponse object
         ///
         /// ```
-        /// # use resync_api_types::{NodeType, DeleteResponse};
+        /// # use remsync_api_types::{NodeType, DeleteResponse};
         /// # let delete = DeleteResponse::new(
         /// #     true, "", "some-id", 4,
         /// # );
@@ -623,7 +623,7 @@ pub mod delete {
         /// Retrieve the success of an DeleteResponse object
         ///
         /// ```
-        /// # use resync_api_types::{NodeType, DeleteResponse};
+        /// # use remsync_api_types::{NodeType, DeleteResponse};
         /// # let delete = DeleteResponse::new(
         /// #     true, "", "some-id", 4,
         /// # );
@@ -636,7 +636,7 @@ pub mod delete {
         /// Retrieve the ID of an DeleteResponse object
         ///
         /// ```
-        /// # use resync_api_types::{NodeType, DeleteResponse};
+        /// # use remsync_api_types::{NodeType, DeleteResponse};
         /// # let delete = DeleteResponse::new(
         /// #     true, "", "some-id", 4,
         /// # );
@@ -649,7 +649,7 @@ pub mod delete {
         /// Retrieve the version of an DeleteResponse object
         ///
         /// ```
-        /// # use resync_api_types::{NodeType, DeleteResponse};
+        /// # use remsync_api_types::{NodeType, DeleteResponse};
         /// # let delete = DeleteResponse::new(
         /// #     true, "", "some-id", 4,
         /// # );

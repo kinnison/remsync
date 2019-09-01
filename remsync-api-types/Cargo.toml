@@ -1,5 +1,5 @@
 [package]
-name = "resync-api-types"
+name = "remsync-api-types"
 version = "0.1.0"
 authors = ["Daniel Silverstone <dsilvers@digital-scurf.org>"]
 edition = "2018"

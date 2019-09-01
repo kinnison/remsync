@@ -25,7 +25,7 @@ pub mod auth {
         /// Create a new request
         ///
         /// ```
-        /// # use resync_api_types::DeviceTokenRequest;
+        /// # use remsync_api_types::DeviceTokenRequest;
         ///
         /// let token = DeviceTokenRequest::new("abcdefg",
         ///                                     "device-resync",
@@ -42,7 +42,7 @@ pub mod auth {
         /// Retrieve the code from a request
         ///
         /// ```
-        /// # use resync_api_types::DeviceTokenRequest;
+        /// # use remsync_api_types::DeviceTokenRequest;
         /// # let token = DeviceTokenRequest::new("abcdefg",
         /// #                                     "device-resync",
         /// #                                     "a1acac82-cc20-11e9-bd13-c3262b9895b0");
@@ -55,7 +55,7 @@ pub mod auth {
         /// Retrieve the device descriptor from a request
         ///
         /// ```
-        /// # use resync_api_types::DeviceTokenRequest;
+        /// # use remsync_api_types::DeviceTokenRequest;
         /// # let token = DeviceTokenRequest::new("abcdefg",
         /// #                                     "device-resync",
         /// #                                     "a1acac82-cc20-11e9-bd13-c3262b9895b0");
@@ -68,7 +68,7 @@ pub mod auth {
         /// Retrieve the device ID from a request
         ///
         /// ```
-        /// # use resync_api_types::DeviceTokenRequest;
+        /// # use remsync_api_types::DeviceTokenRequest;
         /// # let token = DeviceTokenRequest::new("abcdefg",
         /// #                                     "device-resync",
         /// #                                     "a1acac82-cc20-11e9-bd13-c3262b9895b0");
@@ -110,8 +110,8 @@ pub mod upload {
         /// Create a new UploadRequestRequest
         ///
         /// ```
-        /// # use resync_api_types::NodeType;
-        /// # use resync_api_types::UploadRequestRequest;
+        /// # use remsync_api_types::NodeType;
+        /// # use remsync_api_types::UploadRequestRequest;
         /// let upload = UploadRequestRequest::new("some-id",
         ///                                        "some-parent-id",
         ///                                        NodeType::CollectionType,
@@ -129,8 +129,8 @@ pub mod upload {
         /// Retrieve the ID of an UploadRequestRequest
         ///
         /// ```
-        /// # use resync_api_types::NodeType;
-        /// # use resync_api_types::UploadRequestRequest;
+        /// # use remsync_api_types::NodeType;
+        /// # use remsync_api_types::UploadRequestRequest;
         /// # let upload = UploadRequestRequest::new("some-id",
         /// #                                        "some-parent-id",
         /// #                                        NodeType::CollectionType,
@@ -144,8 +144,8 @@ pub mod upload {
         /// Retrieve the Parent ID of an UploadRequestRequest
         ///
         /// ```
-        /// # use resync_api_types::NodeType;
-        /// # use resync_api_types::UploadRequestRequest;
+        /// # use remsync_api_types::NodeType;
+        /// # use remsync_api_types::UploadRequestRequest;
         /// # let upload = UploadRequestRequest::new("some-id",
         /// #                                        "some-parent-id",
         /// #                                        NodeType::CollectionType,
@@ -159,8 +159,8 @@ pub mod upload {
         /// Retrieve the node type of an UploadRequestRequest
         ///
         /// ```
-        /// # use resync_api_types::NodeType;
-        /// # use resync_api_types::UploadRequestRequest;
+        /// # use remsync_api_types::NodeType;
+        /// # use remsync_api_types::UploadRequestRequest;
         /// # let upload = UploadRequestRequest::new("some-id",
         /// #                                        "some-parent-id",
         /// #                                        NodeType::CollectionType,
@@ -174,8 +174,8 @@ pub mod upload {
         /// Retrieve the version of an UploadRequestRequest
         ///
         /// ```
-        /// # use resync_api_types::NodeType;
-        /// # use resync_api_types::UploadRequestRequest;
+        /// # use remsync_api_types::NodeType;
+        /// # use remsync_api_types::UploadRequestRequest;
         /// # let upload = UploadRequestRequest::new("some-id",
         /// #                                        "some-parent-id",
         /// #                                        NodeType::CollectionType,
@@ -224,8 +224,8 @@ pub mod upload {
         /// Create a new UpdateStatusRequest
         ///
         /// ```
-        /// # use resync_api_types::NodeType;
-        /// # use resync_api_types::UpdateStatusRequest;
+        /// # use remsync_api_types::NodeType;
+        /// # use remsync_api_types::UpdateStatusRequest;
         /// let upload = UpdateStatusRequest::new("some-id",
         ///                                       "some-parent-id",
         ///                                       NodeType::CollectionType,
@@ -260,8 +260,8 @@ pub mod upload {
         /// Retrieve the ID of an UpdateStatusRequest
         ///
         /// ```
-        /// # use resync_api_types::NodeType;
-        /// # use resync_api_types::UpdateStatusRequest;
+        /// # use remsync_api_types::NodeType;
+        /// # use remsync_api_types::UpdateStatusRequest;
         /// # let upload = UpdateStatusRequest::new("some-id",
         /// #                                       "some-parent-id",
         /// #                                       NodeType::CollectionType,
@@ -279,8 +279,8 @@ pub mod upload {
         /// Retrieve the Parent ID of an UpdateStatusRequest
         ///
         /// ```
-        /// # use resync_api_types::NodeType;
-        /// # use resync_api_types::UpdateStatusRequest;
+        /// # use remsync_api_types::NodeType;
+        /// # use remsync_api_types::UpdateStatusRequest;
         /// # let upload = UpdateStatusRequest::new("some-id",
         /// #                                       "some-parent-id",
         /// #                                       NodeType::CollectionType,
@@ -298,8 +298,8 @@ pub mod upload {
         /// Retrieve the node type of an UpdateStatusRequest
         ///
         /// ```
-        /// # use resync_api_types::NodeType;
-        /// # use resync_api_types::UpdateStatusRequest;
+        /// # use remsync_api_types::NodeType;
+        /// # use remsync_api_types::UpdateStatusRequest;
         /// # let upload = UpdateStatusRequest::new("some-id",
         /// #                                       "some-parent-id",
         /// #                                       NodeType::CollectionType,
@@ -317,8 +317,8 @@ pub mod upload {
         /// Retrieve the version of an UpdateStatusRequest
         ///
         /// ```
-        /// # use resync_api_types::NodeType;
-        /// # use resync_api_types::UpdateStatusRequest;
+        /// # use remsync_api_types::NodeType;
+        /// # use remsync_api_types::UpdateStatusRequest;
         /// # let upload = UpdateStatusRequest::new("some-id",
         /// #                                       "some-parent-id",
         /// #                                       NodeType::CollectionType,
@@ -336,8 +336,8 @@ pub mod upload {
         /// Retrieve the bookmark status of an UpdateStatusRequest
         ///
         /// ```
-        /// # use resync_api_types::NodeType;
-        /// # use resync_api_types::UpdateStatusRequest;
+        /// # use remsync_api_types::NodeType;
+        /// # use remsync_api_types::UpdateStatusRequest;
         /// # let upload = UpdateStatusRequest::new("some-id",
         /// #                                       "some-parent-id",
         /// #                                       NodeType::CollectionType,
@@ -355,8 +355,8 @@ pub mod upload {
         /// Retrieve the current page of an UpdateStatusRequest
         ///
         /// ```
-        /// # use resync_api_types::NodeType;
-        /// # use resync_api_types::UpdateStatusRequest;
+        /// # use remsync_api_types::NodeType;
+        /// # use remsync_api_types::UpdateStatusRequest;
         /// # let upload = UpdateStatusRequest::new("some-id",
         /// #                                       "some-parent-id",
         /// #                                       NodeType::CollectionType,
@@ -374,8 +374,8 @@ pub mod upload {
         /// Retrieve the node name of an UpdateStatusRequest
         ///
         /// ```
-        /// # use resync_api_types::NodeType;
-        /// # use resync_api_types::UpdateStatusRequest;
+        /// # use remsync_api_types::NodeType;
+        /// # use remsync_api_types::UpdateStatusRequest;
         /// # let upload = UpdateStatusRequest::new("some-id",
         /// #                                       "some-parent-id",
         /// #                                       NodeType::CollectionType,
@@ -393,8 +393,8 @@ pub mod upload {
         /// Retrieve the modification time of an UpdateStatusRequest
         ///
         /// ```
-        /// # use resync_api_types::NodeType;
-        /// # use resync_api_types::UpdateStatusRequest;
+        /// # use remsync_api_types::NodeType;
+        /// # use remsync_api_types::UpdateStatusRequest;
         /// # let upload = UpdateStatusRequest::new("some-id",
         /// #                                       "some-parent-id",
         /// #                                       NodeType::CollectionType,
@@ -433,7 +433,7 @@ pub mod delete {
         /// Create a new DeleteRequest
         ///
         /// ```
-        /// # use resync_api_types::DeleteRequest;
+        /// # use remsync_api_types::DeleteRequest;
         /// let delete = DeleteRequest::new("some-id", 4);
         /// ```
         pub fn new(id: &str, version: usize) -> Self {
@@ -446,7 +446,7 @@ pub mod delete {
         /// Retrieve the ID of a new DeleteRequest
         ///
         /// ```
-        /// # use resync_api_types::DeleteRequest;
+        /// # use remsync_api_types::DeleteRequest;
         /// # let delete = DeleteRequest::new("some-id", 4);
         /// assert_eq!(delete.id(), "some-id");
         /// ```
@@ -457,7 +457,7 @@ pub mod delete {
         /// Retrieve the version of a new DeleteRequest
         ///
         /// ```
-        /// # use resync_api_types::DeleteRequest;
+        /// # use remsync_api_types::DeleteRequest;
         /// # let delete = DeleteRequest::new("some-id", 4);
         /// assert_eq!(delete.version(), 4);
         /// ```

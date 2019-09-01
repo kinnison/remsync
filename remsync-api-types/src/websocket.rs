@@ -54,7 +54,7 @@ impl WebSocketMessageAttributes {
     /// The attributes of the mesage tell us what happened, to what node.
     ///
     /// ```
-    /// # use resync_api_types::{NodeType, WebSocketEventType, WebSocketMessageAttributes};
+    /// # use remsync_api_types::{NodeType, WebSocketEventType, WebSocketMessageAttributes};
     /// let attrs = WebSocketMessageAttributes::new(
     ///     "some-user-id", false, WebSocketEventType::DocAdded, "some-id",
     ///     "some-parent-id", "some-device-desc", "some-device-id",
@@ -90,7 +90,7 @@ impl WebSocketMessageAttributes {
     /// Retrieve the auth0 userid from an attributes object.
     ///
     /// ```
-    /// # use resync_api_types::{NodeType, WebSocketEventType, WebSocketMessageAttributes};
+    /// # use remsync_api_types::{NodeType, WebSocketEventType, WebSocketMessageAttributes};
     /// # let attrs = WebSocketMessageAttributes::new(
     /// #     "some-user-id", false, WebSocketEventType::DocAdded, "some-id",
     /// #     "some-parent-id", "some-device-desc", "some-device-id",
@@ -105,7 +105,7 @@ impl WebSocketMessageAttributes {
     /// Retrieve the bookmarked status from an attributes object.
     ///
     /// ```
-    /// # use resync_api_types::{NodeType, WebSocketEventType, WebSocketMessageAttributes};
+    /// # use remsync_api_types::{NodeType, WebSocketEventType, WebSocketMessageAttributes};
     /// # let attrs = WebSocketMessageAttributes::new(
     /// #     "some-user-id", false, WebSocketEventType::DocAdded, "some-id",
     /// #     "some-parent-id", "some-device-desc", "some-device-id",
@@ -120,7 +120,7 @@ impl WebSocketMessageAttributes {
     /// Retrieve the event type from an attributes object.
     ///
     /// ```
-    /// # use resync_api_types::{NodeType, WebSocketEventType, WebSocketMessageAttributes};
+    /// # use remsync_api_types::{NodeType, WebSocketEventType, WebSocketMessageAttributes};
     /// # let attrs = WebSocketMessageAttributes::new(
     /// #     "some-user-id", false, WebSocketEventType::DocAdded, "some-id",
     /// #     "some-parent-id", "some-device-desc", "some-device-id",
@@ -135,7 +135,7 @@ impl WebSocketMessageAttributes {
     /// Retrieve the node ID from an attributes object.
     ///
     /// ```
-    /// # use resync_api_types::{NodeType, WebSocketEventType, WebSocketMessageAttributes};
+    /// # use remsync_api_types::{NodeType, WebSocketEventType, WebSocketMessageAttributes};
     /// # let attrs = WebSocketMessageAttributes::new(
     /// #     "some-user-id", false, WebSocketEventType::DocAdded, "some-id",
     /// #     "some-parent-id", "some-device-desc", "some-device-id",
@@ -150,7 +150,7 @@ impl WebSocketMessageAttributes {
     /// Retrieve the node's parent ID from an attributes object.
     ///
     /// ```
-    /// # use resync_api_types::{NodeType, WebSocketEventType, WebSocketMessageAttributes};
+    /// # use remsync_api_types::{NodeType, WebSocketEventType, WebSocketMessageAttributes};
     /// # let attrs = WebSocketMessageAttributes::new(
     /// #     "some-user-id", false, WebSocketEventType::DocAdded, "some-id",
     /// #     "some-parent-id", "some-device-desc", "some-device-id",
@@ -165,7 +165,7 @@ impl WebSocketMessageAttributes {
     /// Retrieve the author device descriptor from an attributes object.
     ///
     /// ```
-    /// # use resync_api_types::{NodeType, WebSocketEventType, WebSocketMessageAttributes};
+    /// # use remsync_api_types::{NodeType, WebSocketEventType, WebSocketMessageAttributes};
     /// # let attrs = WebSocketMessageAttributes::new(
     /// #     "some-user-id", false, WebSocketEventType::DocAdded, "some-id",
     /// #     "some-parent-id", "some-device-desc", "some-device-id",
@@ -180,7 +180,7 @@ impl WebSocketMessageAttributes {
     /// Retrieve the author device ID from an attributes object.
     ///
     /// ```
-    /// # use resync_api_types::{NodeType, WebSocketEventType, WebSocketMessageAttributes};
+    /// # use remsync_api_types::{NodeType, WebSocketEventType, WebSocketMessageAttributes};
     /// # let attrs = WebSocketMessageAttributes::new(
     /// #     "some-user-id", false, WebSocketEventType::DocAdded, "some-id",
     /// #     "some-parent-id", "some-device-desc", "some-device-id",
@@ -195,7 +195,7 @@ impl WebSocketMessageAttributes {
     /// Retrieve the node type from an attributes object.
     ///
     /// ```
-    /// # use resync_api_types::{NodeType, WebSocketEventType, WebSocketMessageAttributes};
+    /// # use remsync_api_types::{NodeType, WebSocketEventType, WebSocketMessageAttributes};
     /// # let attrs = WebSocketMessageAttributes::new(
     /// #     "some-user-id", false, WebSocketEventType::DocAdded, "some-id",
     /// #     "some-parent-id", "some-device-desc", "some-device-id",
@@ -210,7 +210,7 @@ impl WebSocketMessageAttributes {
     /// Retrieve the node version from an attributes object.
     ///
     /// ```
-    /// # use resync_api_types::{NodeType, WebSocketEventType, WebSocketMessageAttributes};
+    /// # use remsync_api_types::{NodeType, WebSocketEventType, WebSocketMessageAttributes};
     /// # let attrs = WebSocketMessageAttributes::new(
     /// #     "some-user-id", false, WebSocketEventType::DocAdded, "some-id",
     /// #     "some-parent-id", "some-device-desc", "some-device-id",
@@ -225,7 +225,7 @@ impl WebSocketMessageAttributes {
     /// Retrieve the name of the node from an attributes object.
     ///
     /// ```
-    /// # use resync_api_types::{NodeType, WebSocketEventType, WebSocketMessageAttributes};
+    /// # use remsync_api_types::{NodeType, WebSocketEventType, WebSocketMessageAttributes};
     /// # let attrs = WebSocketMessageAttributes::new(
     /// #     "some-user-id", false, WebSocketEventType::DocAdded, "some-id",
     /// #     "some-parent-id", "some-device-desc", "some-device-id",
@@ -259,7 +259,7 @@ impl WebSocketMessage {
     ///
     /// Web socket messages consist of an ID, a time, and a set of attributes.
     /// ```
-    /// # use resync_api_types::*;
+    /// # use remsync_api_types::*;
     /// # let attrs = WebSocketMessageAttributes::new(
     /// #     "some-user-id", false, WebSocketEventType::DocAdded, "some-id",
     /// #     "some-parent-id", "some-device-desc", "some-device-id",
@@ -286,7 +286,7 @@ impl WebSocketMessage {
     /// Note, this is only a borrow of the data
     ///
     /// ```
-    /// # use resync_api_types::*;
+    /// # use remsync_api_types::*;
     /// # let attrs = WebSocketMessageAttributes::new(
     /// #     "some-user-id", false, WebSocketEventType::DocAdded, "some-id",
     /// #     "some-parent-id", "some-device-desc", "some-device-id",
@@ -302,7 +302,7 @@ impl WebSocketMessage {
     /// Retrieve the message ID from a web socket message.
     ///
     /// ```
-    /// # use resync_api_types::*;
+    /// # use remsync_api_types::*;
     /// # let attrs = WebSocketMessageAttributes::new(
     /// #     "some-user-id", false, WebSocketEventType::DocAdded, "some-id",
     /// #     "some-parent-id", "some-device-desc", "some-device-id",
@@ -318,7 +318,7 @@ impl WebSocketMessage {
     /// Retrieve the publication time from a web socket message.
     ///
     /// ```
-    /// # use resync_api_types::*;
+    /// # use remsync_api_types::*;
     /// # let attrs = WebSocketMessageAttributes::new(
     /// #     "some-user-id", false, WebSocketEventType::DocAdded, "some-id",
     /// #     "some-parent-id", "some-device-desc", "some-device-id",
@@ -345,7 +345,7 @@ impl WebSocketEvent {
     ///
     /// Web socket events consist of a subscription name and a message.
     /// ```
-    /// # use resync_api_types::*;
+    /// # use remsync_api_types::*;
     /// # let attrs = WebSocketMessageAttributes::new(
     /// #     "some-user-id", false, WebSocketEventType::DocAdded, "some-id",
     /// #     "some-parent-id", "some-device-desc", "some-device-id",
@@ -366,7 +366,7 @@ impl WebSocketEvent {
     /// Note, this is only a borrow of the data.
     ///
     /// ```
-    /// # use resync_api_types::*;
+    /// # use remsync_api_types::*;
     /// # let attrs = WebSocketMessageAttributes::new(
     /// #     "some-user-id", false, WebSocketEventType::DocAdded, "some-id",
     /// #     "some-parent-id", "some-device-desc", "some-device-id",
@@ -383,7 +383,7 @@ impl WebSocketEvent {
     /// Access the subscription channel name for this websocket event
     ///
     /// ```
-    /// # use resync_api_types::*;
+    /// # use remsync_api_types::*;
     /// # let attrs = WebSocketMessageAttributes::new(
     /// #     "some-user-id", false, WebSocketEventType::DocAdded, "some-id",
     /// #     "some-parent-id", "some-device-desc", "some-device-id",
