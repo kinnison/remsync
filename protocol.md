@@ -148,13 +148,13 @@ frame in websocket protocol. The payload looks something like:
 {
   "message": {
     "attributes": {
-      "auth0UserID": "auth0|5d67c7af9584340e0f1ec3d5",
+      "auth0UserID": "auth0|XXXXXXXXXXXXXXXXXXXXXXXX",
       "bookmarked": "false",
       "event": "DocAdded",
       "id": "092fd1cc-df38-4fc5-8633-3a8a15a2a316",
       "parent": "e0c1c79f-b491-45e7-a431-a46fe1ec8a66",
       "sourceDeviceDesc": "remarkable",
-      "sourceDeviceID": "RM102-928-57210",
+      "sourceDeviceID": "RMXXX-XXX-XXXXX",
       "type": "DocumentType",
       "version": "3",
       "vissibleName": "WiFi and USB local sync"
@@ -163,6 +163,32 @@ frame in websocket protocol. The payload looks something like:
     "message_id": "700982536103223",
     "publishTime": "2019-08-31T14:52:54.158Z",
     "publish_time": "2019-08-31T14:52:54.158Z"
+  },
+  "subscription": "projects/remarkable-production/subscriptions/sub-gm1h-notifications-production"
+}
+```
+
+or
+
+```json
+{
+  "message": {
+    "attributes": {
+      "auth0UserID": "auth0|XXXXXXXXXXXXXXXXXXXXXXXX",
+      "bookmarked": "false",
+      "event": "DocDeleted",
+      "id": "0676a521-c548-4ad4-984e-87b875139063",
+      "parent": "e0c1c79f-b491-45e7-a431-a46fe1ec8a66",
+      "sourceDeviceDesc": "remarkable",
+      "sourceDeviceID": "RMXXX-XXX-XXXXX",
+      "type": "DocumentType",
+      "version": "1",
+      "vissibleName": "Notebook"
+    },
+    "messageId": "701046888181767",
+    "message_id": "701046888181767",
+    "publishTime": "2019-08-31T15:36:45.576Z",
+    "publish_time": "2019-08-31T15:36:45.576Z"
   },
   "subscription": "projects/remarkable-production/subscriptions/sub-gm1h-notifications-production"
 }
@@ -222,10 +248,10 @@ give back a full list of all the nodes...
 ```json
 [
   {
+    "Success": true,
+    "Message": "",
     "ID": "20d581ff-4507-4fc3-a7fb-07daf6c4bc86",
     "Version": 33,
-    "Message": "",
-    "Success": true,
     "BlobURLGet": "",
     "BlobURLGetExpires": "0001-01-01T00:00:00Z",
     "ModifiedClient": "2019-08-31T14:34:43.664664Z",
@@ -236,10 +262,10 @@ give back a full list of all the nodes...
     "Parent": ""
   },
   {
+    "Success": true,
+    "Message": "",
     "ID": "67a6f6c7-d4aa-430e-8c27-f40af171b135",
     "Version": 13,
-    "Message": "",
-    "Success": true,
     "BlobURLGet": "",
     "BlobURLGetExpires": "0001-01-01T00:00:00Z",
     "ModifiedClient": "2019-08-30T12:45:51Z",
@@ -328,10 +354,10 @@ A response will be provided of the form:
 ```json
 [
   {
+    "Success": true,
+    "Message": "",
     "ID": "092fd1cc-df38-4fc5-8633-3a8a15a2a316",
     "Version": 3,
-    "Message": "",
-    "Success": true,
     "BlobURLPut": "SOMEHUGEURLWHICHEXPIRESASPERBELOW",
     "BlobURLPutExpires": "2019-08-31T15:52:52.186395996Z"
   }
@@ -378,10 +404,10 @@ The response to such a request is of the form:
 ```json
 [
   {
-    "ID": "092fd1cc-df38-4fc5-8633-3a8a15a2a316",
-    "Version": 3,
+    "Success": true,
     "Message": "",
-    "Success": true
+    "ID": "092fd1cc-df38-4fc5-8633-3a8a15a2a316",
+    "Version": 3
   }
 ]
 ```
@@ -417,10 +443,10 @@ The response is of the form:
 ```json
 [
   {
-    "ID": "5109f2cc-5559-4239-8364-dbd709ca9126",
-    "Version": 1,
+    "Success": true,
     "Message": "",
-    "Success": true
+    "ID": "5109f2cc-5559-4239-8364-dbd709ca9126",
+    "Version": 1
   }
 ]
 ```
