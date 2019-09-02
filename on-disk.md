@@ -49,6 +49,8 @@ is whether or not the metadata needs to be synchronised. For example, deleting
 a node sets `metadatamodified` but does not unset `synced` nor does it increment
 the `version` or update `lastModified`.
 
+The `lastModified` _appears_ to be a `time_t` but in millisecond precision.
+
 Editing a document sets `lastModified`, `metadatamodified`, `modified`, but
 does not alter the `version`, nor unset `synced`. After sync, `version` is
 incremented, `metadatamodified` and `modified` are unset.
