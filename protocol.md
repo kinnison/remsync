@@ -458,3 +458,20 @@ The response is of the form:
 ```
 
 Where success and message are as before, and id/version will match the request.
+
+# Notes on the zip files (blobs)
+
+The zip files transfer the non `.metadata` content from the on-disk format
+(see `on-disk.md`) with some subtle changes.
+
+Firstly, the blob zips transfer the `.content`, the pages themselves (the dir
+with no suffix), the `.pagedata`, any `.pdf` or otherwise, and the `.thumbnails`
+though the last is definitely optional.
+
+Both thumbnails and page information have had their UUIDs of the pages stripped
+and instead of `some-long-id/some-long-other-id.rm` you get `some-long-id/0.rm`
+etc. the `0` is in the index into the `.content` file's `pages` array where the
+IDs of the pages remains available to reconstitute the dataset.
+
+In the case of collections, the zip file only contains the `.content` file which
+is, as always, `[\n]\n`.
