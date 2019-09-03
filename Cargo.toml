@@ -8,6 +8,8 @@ edition = "2018"
 members = [
     "remsync-api-types",
     "remsync-api-client",
+    "remsync-client-types",
+    "remsync-client",
 ]
 
 [dependencies]
