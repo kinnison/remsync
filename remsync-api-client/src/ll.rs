@@ -188,7 +188,7 @@ where
         .method("PUT")
         .header("Authorization", format!("Bearer {}", user_token))
         .uri(catenate_url_path(base, "/document-storage/json/2/delete")?)
-        .body(Body::from(serde_json::to_string(&req)?))?;
+        .body(Body::from(serde_json::to_string(&[&req])?))?;
     let response = client.request(request).await?;
 
     if !response.status().is_success() {
@@ -196,7 +196,11 @@ where
     }
 
     let ret = hoover_body_to_vec(response.into_body()).await?;
-    let ret: DeleteResponse = serde_json::from_slice(&ret)?;
+    let ret: Vec<DeleteResponse> = serde_json::from_slice(&ret)?;
+    if ret.len() != 1 {
+        return Err(format!("API:DeleteDoc:{} responses", ret.len()).into());
+    }
+    let ret = &ret[0];
     if !ret.success() {
         return Err(format!("API:DeleteDoc:{}", ret.message()).into());
     }
