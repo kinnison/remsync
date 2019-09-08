@@ -339,6 +339,9 @@ parents do not exist yet. It's not clear if the tablet would download something
 uploaded before its parent folder was available too, but it may be worth experimenting
 in the future.
 
+Brand new documents _MUST_ have a version equal to 1, updates to documents also
+_MUST_ have a version exactly 1 higher than the server held version.
+
 ### Preparing the ground - request upload URL
 
 With a `PUT` to `/document-storage/json/2/upload/request` whose payload looks
