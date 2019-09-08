@@ -9,7 +9,7 @@ pub mod auth {
     ///
     /// This request is sent as a body when requesting a new device bearer
     /// token.  The response is a JWT as a plain body.
-    #[derive(Debug, Serialize, Deserialize)]
+    #[derive(Clone, Debug, Serialize, Deserialize)]
     pub struct DeviceTokenRequest {
         /// The OTP code for the device token request.
         code: String,
@@ -90,7 +90,7 @@ pub mod upload {
     ///
     /// This request is sent when a client wishes to upload a node to the API
     /// and needs to be provided with a blob put URL etc.
-    #[derive(Debug, Serialize, Deserialize)]
+    #[derive(Clone, Debug, Serialize, Deserialize)]
     pub struct UploadRequestRequest {
         #[serde(rename = "ID")]
         /// The ID of the node (UUID)
@@ -192,7 +192,7 @@ pub mod upload {
     /// This is sent to update the metadata about a node.  It must match the
     /// id, parent, type, and version of the UploadRequestRequest associated
     /// with the update.
-    #[derive(Debug, Serialize, Deserialize)]
+    #[derive(Clone, Debug, Serialize, Deserialize)]
     pub struct UpdateStatusRequest {
         #[serde(rename = "ID")]
         /// The ID of the node to update
@@ -419,7 +419,7 @@ pub mod delete {
     ///
     /// The ID and Version must match a node currently in the index for
     /// this to work.
-    #[derive(Debug, Serialize, Deserialize)]
+    #[derive(Clone, Debug, Serialize, Deserialize)]
     pub struct DeleteRequest {
         #[serde(rename = "ID")]
         /// The ID of the node to delete

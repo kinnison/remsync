@@ -346,7 +346,7 @@ impl NotificationMessage {
 ///
 /// The event consists of a message (potentially sent to several endpoints)
 /// and a subscription channel name which is likely unique to this endpoint.
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct NotificationEvent {
     /// The message in the event
     message: NotificationMessage,

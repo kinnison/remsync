@@ -5,7 +5,7 @@ pub mod discovery {
 
     use serde::{Deserialize, Serialize};
     /// A response from a service discovery request
-    #[derive(Debug, Serialize, Deserialize)]
+    #[derive(Clone, Debug, Serialize, Deserialize)]
     pub struct DiscoveryResponse {
         #[serde(rename = "Status")]
         /// The status of the response, almost universally "OK"
@@ -76,7 +76,7 @@ pub mod docs {
     ///
     /// This always comes back in a list, and the blob URL stuff may not be
     /// valid unless requested.
-    #[derive(Debug, Serialize, Deserialize)]
+    #[derive(Clone, Debug, Serialize, Deserialize)]
     pub struct DocsResponse {
         #[serde(rename = "Success")]
         /// Whether this docs request was successful
@@ -351,7 +351,7 @@ pub mod upload {
     ///
     /// It's worth noting that these always come in lists even though the
     /// clients seem to only ever send one at a time
-    #[derive(Debug, Serialize, Deserialize)]
+    #[derive(Clone, Debug, Serialize, Deserialize)]
     pub struct UploadRequestResponse {
         #[serde(rename = "Success")]
         /// Whether this upload request was successful
@@ -486,7 +486,7 @@ pub mod upload {
     /// Note: this come in lists, despite the device only ever using single
     /// requests at a time
     ///
-    #[derive(Debug, Serialize, Deserialize)]
+    #[derive(Clone, Debug, Serialize, Deserialize)]
     pub struct UpdateStatusResponse {
         #[serde(rename = "Success")]
         /// Whether this upload request was successful
@@ -583,7 +583,7 @@ pub mod delete {
     ///
     /// These always come in lists as do the requests, though devices only ever
     /// seem to submit one a a time in the lists.
-    #[derive(Debug, Serialize, Deserialize)]
+    #[derive(Clone, Debug, Serialize, Deserialize)]
     pub struct DeleteResponse {
         #[serde(rename = "Success")]
         /// Whether this upload request was successful

@@ -7,7 +7,7 @@ use serde::{Deserialize, Serialize};
 /// This is basically the claim structure created/used by the reMarkable
 /// authorisation web application via auth0.  It is necessary that we
 /// can decode these as the `auth0-userid` is used in discover URLs
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct DeviceToken {
     #[serde(rename = "auth0-userid")]
     /// The user ID from auth0 used in discovery
@@ -184,7 +184,7 @@ impl DeviceToken {
 /// In theory, this can be incomplete, but we include as much as we know
 /// about because that allows for dealing with things expecting values
 /// later.
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct Auth0Profile {
     #[serde(rename = "ClientID")]
     /// Client ID?  Always ""
@@ -246,7 +246,7 @@ impl Auth0Profile {
 /// These are issued by the reMarkable authorisation web application and
 /// use auth0 as the backing provider.  This structure forms the claims for
 /// the token.
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct UserToken {
     #[serde(rename = "auth0-profile")]
     /// The profile of the user
