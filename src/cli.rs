@@ -69,4 +69,11 @@ pub enum Command {
         /// Output location for the blob
         out: PathBuf,
     },
+    #[structopt(name = "server-pull")]
+    /// Synchronise a directory to match server content
+    ServerPull {
+        #[structopt(name = "dir")]
+        /// The directory to sync with
+        basepath: PathBuf,
+    },
 }

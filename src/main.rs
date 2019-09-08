@@ -5,6 +5,7 @@ use cli::{Command, Options};
 use remsync_api_client::hyper::{self, Uri};
 use remsync_api_client::ll as llapi;
 use remsync_api_types as api;
+use std::collections::{HashMap, HashSet};
 use std::str::FromStr;
 
 fn random_uuid() -> String {
@@ -115,6 +116,59 @@ async fn fetch_blob(opt: &Options) -> Result<()> {
     Ok(())
 }
 
+mod serversync;
+
+async fn server_pull(opt: &Options) -> Result<()> {
+    let basepath = match &opt.cmd {
+        Command::ServerPull { basepath } => basepath,
+        _ => unreachable!(),
+    };
+
+    let mut local_state = serversync::LocalState::new(basepath)?;
+
+    println!(
+        "Loaded {} docs from local directory",
+        local_state.count_docs()
+    );
+    let user_token = acquire_user_token(opt).await?;
+    let storage_base_uri = discover_storage_base(opt, &user_token).await?;
+    let client = https_capable_client();
+    let docs = llapi::storage_fetch_all_docs(&client, &storage_base_uri, &user_token).await?;
+    let docs: HashMap<String, api::DocsResponse> =
+        docs.into_iter().map(|d| (d.id().to_owned(), d)).collect();
+
+    // Now we want to synchronise docs and local-state
+    // To do that, we first delete any docs which are not in the list
+    let server_uuids: HashSet<String> = docs.iter().map(|(id, _)| id.to_owned()).collect();
+    local_state.remove_not_listed(&server_uuids)?;
+    // Next we want to know any docs which have been changed, which basically
+    // means if they're not known to the local state or have a different version
+    let changed_uuids = local_state.find_changed(&docs)?;
+    println!(
+        "We need to fetch {} {}",
+        changed_uuids.len(),
+        if changed_uuids.len() == 1 {
+            "blob"
+        } else {
+            "blobs"
+        }
+    );
+    for uuid in changed_uuids.iter() {
+        print!("=> {}", uuid);
+        use std::fs::File;
+        use std::io::BufWriter;
+        let temppath = local_state.download_path(uuid);
+        let mut outbuf = BufWriter::new(File::create(&temppath)?);
+        println!(
+            " - fetched {} bytes",
+            llapi::storage_fetch_blob(&client, &storage_base_uri, &user_token, uuid, &mut outbuf)
+                .await?
+        );
+        local_state.adopt_doc(&docs[uuid], &temppath)?;
+    }
+    Ok(())
+}
+
 #[tokio::main]
 async fn main() -> Result<()> {
     let opt = Options::get();
@@ -123,5 +177,6 @@ async fn main() -> Result<()> {
         Command::ListServer => list_server(&opt).await,
         Command::ShowTokens => show_tokens(&opt).await,
         Command::FetchBlob { .. } => fetch_blob(&opt).await,
+        Command::ServerPull { .. } => server_pull(&opt).await,
     }
 }
