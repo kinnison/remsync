@@ -172,3 +172,161 @@ where
 
     Ok(written)
 }
+
+pub async fn storage_delete_doc<C>(
+    client: &Client<C, Body>,
+    base: &Uri,
+    user_token: &str,
+    id: &str,
+    version: usize,
+) -> GenericResult<()>
+where
+    C: Connect + Sync + 'static,
+{
+    let req = DeleteRequest::new(id, version);
+    let request = Request::builder()
+        .method("PUT")
+        .header("Authorization", format!("Bearer {}", user_token))
+        .uri(catenate_url_path(base, "/document-storage/json/2/delete")?)
+        .body(Body::from(serde_json::to_string(&req)?))?;
+    let response = client.request(request).await?;
+
+    if !response.status().is_success() {
+        return Err(format!("API:DeleteDoc:{:?}", response).into());
+    }
+
+    let ret = hoover_body_to_vec(response.into_body()).await?;
+    let ret: DeleteResponse = serde_json::from_slice(&ret)?;
+    if !ret.success() {
+        return Err(format!("API:DeleteDoc:{}", ret.message()).into());
+    }
+    Ok(())
+}
+
+pub async fn storage_update_doc<C>(
+    client: &Client<C, Body>,
+    base: &Uri,
+    user_token: &str,
+    id: &str,
+    version: usize,
+    parent: &str,
+    node_type: NodeType,
+    bookmarked: bool,
+    current_page: usize,
+    name: &str,
+    modified_client: &str,
+) -> GenericResult<()>
+where
+    C: Connect + Sync + 'static,
+{
+    let req = UpdateStatusRequest::new(
+        id,
+        parent,
+        node_type,
+        version,
+        bookmarked,
+        current_page,
+        name,
+        modified_client,
+    );
+
+    let request = Request::builder()
+        .method("PUT")
+        .header("Authorization", format!("Bearer {}", user_token))
+        .uri(catenate_url_path(
+            base,
+            "/document-storage/json/2/upload/update-status",
+        )?)
+        .body(Body::from(serde_json::to_string(&[&req])?))?;
+    let response = client.request(request).await?;
+
+    if !response.status().is_success() {
+        return Err(format!("API:UpdateStatus:{:?}", response).into());
+    }
+
+    let ret = hoover_body_to_vec(response.into_body()).await?;
+    let ret: Vec<UpdateStatusResponse> = serde_json::from_slice(&ret)?;
+    if ret.len() != 1 {
+        return Err(format!("API:UpdateStatus:{} responses", ret.len()).into());
+    }
+    let ret = &ret[0];
+    if !ret.success() {
+        return Err(format!("API:UpdateStatus:{}", ret.message()).into());
+    }
+
+    Ok(())
+}
+
+pub async fn storage_upload_doc<C>(
+    client: &Client<C, Body>,
+    base: &Uri,
+    user_token: &str,
+    id: &str,
+    version: usize,
+    parent: &str,
+    node_type: NodeType,
+    bookmarked: bool,
+    current_page: usize,
+    name: &str,
+    modified_client: &str,
+    zipfile: Vec<u8>,
+) -> GenericResult<usize>
+where
+    C: Connect + Sync + 'static,
+{
+    let req = UploadRequestRequest::new(id, parent, node_type, version);
+    let request = Request::builder()
+        .method("PUT")
+        .header("Authorization", format!("Bearer {}", user_token))
+        .uri(catenate_url_path(
+            base,
+            "/document-storage/json/2/upload/request",
+        )?)
+        .body(Body::from(serde_json::to_string(&[&req])?))?;
+    let response = client.request(request).await?;
+
+    if !response.status().is_success() {
+        return Err(format!("API:UploadRequest:{:?}", response).into());
+    }
+
+    let ret = hoover_body_to_vec(response.into_body()).await?;
+    let ret: Vec<UploadRequestResponse> = serde_json::from_slice(&ret)?;
+    if ret.len() != 1 {
+        return Err(format!("API:UpdateStatus:{} responses", ret.len()).into());
+    }
+    let ret = &ret[0];
+    if !ret.success() {
+        return Err(format!("API:UploadRequest:{}", ret.message()).into());
+    }
+
+    // We succeeded in requesting the upload, so put the blob
+    let lenzip = zipfile.len();
+    let request = Request::builder()
+        .method("PUT")
+        .uri(ret.blob_url_put())
+        .body(Body::from(zipfile))?;
+    let response = client.request(request).await?;
+
+    if !response.status().is_success() {
+        return Err(format!("API:UploadRequestBlobPut:{:?}", response).into());
+    }
+
+    // Now complete the update
+
+    storage_update_doc(
+        client,
+        base,
+        user_token,
+        id,
+        version,
+        parent,
+        node_type,
+        bookmarked,
+        current_page,
+        name,
+        modified_client,
+    )
+    .await?;
+
+    Ok(lenzip)
+}

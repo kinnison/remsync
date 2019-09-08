@@ -43,6 +43,16 @@ impl LocalState {
         Ok(())
     }
 
+    pub fn get_not_listed(&self, server_uuids: &HashSet<String>) -> HashSet<String> {
+        let mut ret = HashSet::new();
+        for server_uuid in server_uuids.iter() {
+            if !self.docs.contains_key(server_uuid) {
+                ret.insert(server_uuid.to_owned());
+            }
+        }
+        ret
+    }
+
     pub fn find_changed(&self, docs: &HashMap<String, DocsResponse>) -> Result<HashSet<String>> {
         let mut ret = HashSet::new();
 
@@ -53,6 +63,31 @@ impl LocalState {
             match self.docs.get(doc.id()) {
                 Some(localdoc) => {
                     if localdoc.version() != doc.version() {
+                        ret.insert(doc.id().to_owned());
+                    }
+                }
+                None => {
+                    ret.insert(doc.id().to_owned());
+                }
+            }
+        }
+
+        Ok(ret)
+    }
+
+    pub fn find_locally_changed(
+        &self,
+        docs: &HashMap<String, DocsResponse>,
+    ) -> Result<HashSet<String>> {
+        let mut ret = HashSet::new();
+
+        // We contain a superset of the non-deleted values in docs
+        // as such we care about returning the set of things we have
+        // which docs does not, and which we have where docs differs
+        for doc in self.docs.values() {
+            match docs.get(doc.id()) {
+                Some(serverdoc) => {
+                    if serverdoc.version() != doc.version() {
                         ret.insert(doc.id().to_owned());
                     }
                 }
@@ -79,6 +114,10 @@ impl LocalState {
         Ok(())
     }
 
+    pub fn get_doc(&self, uuid: &str) -> Option<&DocsResponse> {
+        self.docs.get(uuid)
+    }
+
     // Private stuff here down
 
     fn doc_path(&self, uuid: &str) -> PathBuf {
@@ -88,7 +127,7 @@ impl LocalState {
         ret
     }
 
-    fn zip_path(&self, uuid: &str) -> PathBuf {
+    pub fn zip_path(&self, uuid: &str) -> PathBuf {
         let mut ret = self.base_path.clone();
         ret.push(uuid);
         ret.set_extension("zip");

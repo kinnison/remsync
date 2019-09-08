@@ -76,4 +76,11 @@ pub enum Command {
         /// The directory to sync with
         basepath: PathBuf,
     },
+    #[structopt(name = "server-push")]
+    /// Synchronise a server to match directory content
+    ServerPush {
+        #[structopt(name = "dir")]
+        /// The directory to sync with
+        basepath: PathBuf,
+    },
 }

@@ -169,6 +169,116 @@ async fn server_pull(opt: &Options) -> Result<()> {
     Ok(())
 }
 
+async fn server_push(opt: &Options) -> Result<()> {
+    let basepath = match &opt.cmd {
+        Command::ServerPush { basepath } => basepath,
+        _ => unreachable!(),
+    };
+
+    let local_state = serversync::LocalState::new(basepath)?;
+
+    println!(
+        "Loaded {} docs from local directory",
+        local_state.count_docs()
+    );
+    let user_token = acquire_user_token(opt).await?;
+    let storage_base_uri = discover_storage_base(opt, &user_token).await?;
+    let client = https_capable_client();
+    let docs = llapi::storage_fetch_all_docs(&client, &storage_base_uri, &user_token).await?;
+    let docs: HashMap<String, api::DocsResponse> =
+        docs.into_iter().map(|d| (d.id().to_owned(), d)).collect();
+
+    // Now we want to synchronise docs and local-state
+    // To do that, we first delete any docs which are not in the list
+    let server_uuids: HashSet<String> = docs.iter().map(|(id, _)| id.to_owned()).collect();
+    let to_remove = local_state.get_not_listed(&server_uuids);
+    println!(
+        "We need to remove {} documents from the server first",
+        to_remove.len()
+    );
+
+    for uuid in to_remove.iter() {
+        llapi::storage_delete_doc(
+            &client,
+            &storage_base_uri,
+            &user_token,
+            uuid,
+            docs[uuid].version(),
+        )
+        .await?;
+    }
+
+    // Next we want to know any docs which have been changed, which basically
+    // means if they're not known to the local state or have a different version
+    let changed_uuids = local_state.find_locally_changed(&docs)?;
+    println!(
+        "We need to send {} {}",
+        changed_uuids.len(),
+        if changed_uuids.len() == 1 {
+            "blob"
+        } else {
+            "blobs"
+        }
+    );
+    for uuid in changed_uuids.iter() {
+        print!("=> {}", uuid);
+        use std::fs::File;
+        use std::io::{BufReader, Read};
+        let temppath = local_state.zip_path(uuid);
+        let mut reader = BufReader::new(File::open(temppath)?);
+        let mut zipfile = Vec::new();
+        reader.read_to_end(&mut zipfile)?;
+        let doc = local_state.get_doc(uuid).ok_or("WTF?")?;
+        let version = if docs.contains_key(uuid) {
+            docs[uuid].version() + 1
+        } else {
+            1
+        };
+        print!(
+            " sent {} bytes",
+            llapi::storage_upload_doc(
+                &client,
+                &storage_base_uri,
+                &user_token,
+                uuid,
+                version,
+                doc.parent(),
+                doc.node_type(),
+                doc.bookmarked(),
+                doc.current_page(),
+                doc.name(),
+                doc.modified_client(),
+                zipfile,
+            )
+            .await?
+        );
+        if version != doc.version() {
+            // We need to walk the document up to the current version
+            // in order for the server to be in sync
+            for v in version + 1..=doc.version() {
+                llapi::storage_update_doc(
+                    &client,
+                    &storage_base_uri,
+                    &user_token,
+                    &uuid,
+                    v,
+                    doc.parent(),
+                    doc.node_type(),
+                    doc.bookmarked(),
+                    doc.current_page(),
+                    doc.name(),
+                    doc.modified_client(),
+                )
+                .await?;
+            }
+            println!(", updated version to {}", doc.version());
+        } else {
+            println!(", done.");
+        }
+    }
+    Ok(())
+}
+
 #[tokio::main]
 async fn main() -> Result<()> {
     let opt = Options::get();
@@ -178,5 +288,6 @@ async fn main() -> Result<()> {
         Command::ShowTokens => show_tokens(&opt).await,
         Command::FetchBlob { .. } => fetch_blob(&opt).await,
         Command::ServerPull { .. } => server_pull(&opt).await,
+        Command::ServerPush { .. } => server_push(&opt).await,
     }
 }
