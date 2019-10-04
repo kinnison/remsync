@@ -32,7 +32,12 @@ failure which caused the SSL connection to fail.
 There is no hint of `my.remarkable.com` anywhere on the filesystem other than
 in `xochitl` so it's not likely to be being acquired as a hostname from elsewhere.
 
-TODO: DNS hijack to find out what's going on with this.
+After further investigation we discovered that actually the login service is
+another appspot service of `webapp-production-dot-remarkable-production.appspot.com`
+and changing the obvious `webapp.` string to `logins.` reflects in the login flow.
+
+The `-production-dot-remarkable-production.appspot.com` suffix appears to be
+the one mentioned below, as a full string.
 
 ## Synchronisation
 
@@ -57,6 +62,16 @@ used in the production firmware. Instead the service manager hostname appears
 to have been constructed from the `service-manager-` string, a string consisting
 of `production` (likely from later in the file), the `-dot-remarkable-` string,
 another copy of the `production` string, and then `.appspot.com`.
+
+Indeed later in the file we see a set of strings:
+
+```
+hwdev
+production
+staging
+development
+qa
+```
 
 This means that, assuming we leave `service-manager-` and `production` alone,
 we have `-dot-remarkable-` available as some kind of potential vhost spot,
@@ -91,3 +106,36 @@ If at all possible, it will make sense to acquire a `*.remsync.net` or similar
 certificate which can be deployed to any and all services under that domain.
 
 TODO: We know the set of trusted root certificates, does LetsEncrypt fall into that?
+
+## Domain names etc.
+
+The string `-production-dot-remarkable-dot-production.appspot.com` and the
+`service-manager-` `production` `-dot-remarkable-` `production` `.appspot.com`
+strings are all nominally configurable by means of hex-editing the binary.
+
+The trivial first pass is to replace `appspot.com` with `remsync.net` wherever
+it shows up. This has the advantage that string lengths are preserved and
+that only a single SSL cert for `*.remsync.net` is needed to cover all
+eventualities.
+
+Since we see that the login flow doesn't request something of the service-manager,
+we know that it's unlikely to revert to `my.remarkable.com` in the near future.
+
+# Configuration file
+
+There's no obvious way to pick an entirely different configuration file name
+as far as looking at the bytes in the binary goes. On the other hand some of
+the field names are moderately easy to spot.
+
+```
+devicetoken -- Corresponds to the JWT for the device
+usertoken   -- Corresponds to the session JWT (renewed every 24hrs or so)
+wifinetworks -- The group name for wifi networks
+```
+
+We should probably rename those entries in order to reduce the chance of information
+leakage should a tablet be updated without the user knowing / being able to prevent it.
+
+Reversing the character order so `nekotecived` and `nekotresu` for the two tokens,
+and the obvious but amusing `wifinotworks` for the group should be sufficient to
+ensure that an update doesn't leak secrets.

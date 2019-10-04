@@ -22,7 +22,11 @@ TODO: The handwriting recognition API has yet to be explored
 
 # Authentication
 
-**NOTE**: This has a fixed-by-code endpoint of `my.remarkable.com`
+**NOTE**: This supposedly is a fixed-by-code endpoint of `my.remarkable.com`
+
+**NOTE**: Further investigations suggest the endpoint might actually be
+`webapp-production-dot-remarkable-production.appspot.com` which may be the
+backing service behind `my.remarkable.com`.
 
 The reMarkable authenticates by acquiring a device token by way of a one-time
 password supplied by the reMarkable website. This OTP is submitted to an API
